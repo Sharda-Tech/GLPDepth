@@ -11,7 +11,7 @@ from tensorboardX import SummaryWriter
 from models.model import GLPDepth
 import utils.metrics as metrics
 from utils.criterion import SiLogLoss
-import utils.logging as logging
+import utils.logging_2 as logging
 
 from dataset.base_dataset import get_dataset
 from configs.train_options import TrainOptions
