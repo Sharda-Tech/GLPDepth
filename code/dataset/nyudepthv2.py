@@ -48,8 +48,6 @@ class nyudepthv2(BaseDataset):
 
         depth = cv2.cvtColor(depth, cv2.COLOR_BGR2GRAY)
 
-        print('depth RESIZE',depth.shape)
-
         if self.is_train:
             image, depth = self.augment_training_data(image, depth)
         else:

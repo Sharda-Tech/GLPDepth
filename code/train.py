@@ -18,7 +18,7 @@ from configs.train_options import TrainOptions
 
 metric_name = ['d1', 'd2', 'd3', 'abs_rel', 'sq_rel', 'rmse', 'rmse_log',
                'log10', 'silog']
-
+from tqdm import tqdm
 
 def main():
     opt = TrainOptions()
@@ -106,7 +106,7 @@ def train(train_loader, model, criterion_d, optimizer, device, epoch, args):
     depth_loss = logging.AverageMeter()
     half_epoch = args.epochs // 2
 
-    for batch_idx, batch in enumerate(train_loader):      
+    for batch_idx, batch in tqdm(enumerate(train_loader), total=len(train_loader)):      
         global_step += 1
 
         for param_group in optimizer.param_groups:
