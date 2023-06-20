@@ -2,6 +2,7 @@ import os
 import cv2
 
 from dataset.base_dataset import BaseDataset
+import numpy as np
 
 
 class nyudepthv2(BaseDataset):
@@ -33,17 +34,21 @@ class nyudepthv2(BaseDataset):
         return len(self.filenames_list)
 
     def __getitem__(self, idx):
-        img_path = self.data_path + self.filenames_list[idx].split(' ')[0]
-        gt_path = self.data_path + self.filenames_list[idx].split(' ')[1]
+        img_path = self.filenames_list[idx].split(' ')[0]
+        gt_path = self.filenames_list[idx].split(' ')[1]
+        
         filename = img_path.split('/')[-2] + '_' + img_path.split('/')[-1]
 
         image = cv2.imread(img_path)
         image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
         depth = cv2.imread(gt_path, cv2.IMREAD_UNCHANGED).astype('float32')
+        
+        image = cv2.resize(image, (1024, 1024))
+        depth = cv2.resize(image, (1024, 1024))
 
-        if self.scale_size:
-            image = cv2.resize(image, (self.scale_size[0], self.scale_size[1]))
-            depth = cv2.resize(image, (self.scale_size[0], self.scale_size[1]))
+        depth = cv2.cvtColor(depth, cv2.COLOR_BGR2GRAY)
+
+        print('depth RESIZE',depth.shape)
 
         if self.is_train:
             image, depth = self.augment_training_data(image, depth)
