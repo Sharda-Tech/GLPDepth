@@ -5,7 +5,7 @@ from dataset.base_dataset import BaseDataset
 import numpy as np
 
 
-class nyudepthv2(BaseDataset):
+class nyudepthv2_eval(BaseDataset):
     def __init__(self, data_path, filenames_path='./code/dataset/filenames/',
                  is_train=True, crop_size=(448, 576), scale_size=None):
         super().__init__(crop_size)
